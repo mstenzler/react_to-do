@@ -1,22 +1,28 @@
 'use strict'
 
 const tasks = require('express').Router();
+const db = require('../models/task');
 
-let taskData = []
+//let taskData = []
+const sendJSONResp = (req,res)=>res.json(res.rows);
 
-tasks.route('/:id')
- .get((req,res)=>res.send(`show task ${req.params.id}`))
- .put((req,res)=>res.send(`update task ${req.params.id}`))
- .delete((req,res)=>res.send(`deletetask ${req.params.id}`))
+tasks.route('/:tID')
+ // .get((req,res)=>res.send(`show task ${req.params.tID}`))
+ // .put((req,res)=>res.send(`update task ${req.params.id}`))
+ // .delete((req,res)=>res.send(`deletetask ${req.params.id}`))
+ .put(db.updateTask, sendJSONResp)
+ .delete(db.deleteTask, (req,res)=>res.send(req.params.taskID))
+
+// tasks.route('/')
+//  .get((req,res)=>res.send(`show tasks`))
+//  .post((req,res)=>{
+//   console.log('body = ', req.body)
+//   res.send(`update task. post`)
+// })
 
 tasks.route('/')
- .get((req,res)=>res.send(`show tasks`))
- .post((req,res)=>{
-  console.log('body = ', req.body)
-  res.send(`update task. post`)
-})
-
-
+  .get(db.getTasks, sendJSONResp)
+  .post(db.addTask, sendJSONResp)
 
 
 // router.get('/', function(req,res) {

@@ -20,8 +20,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 //setting up morgan and json parser middleware
 app.use(logger('dev'))
-//app.use( bodyParser.json()); 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use( bodyParser.json()); 
+//app.use(bodyParser.urlencoded({extended: false}));
 
 //app.use('/', homeRoute);
 app.use('/tasks', taskRoute);
